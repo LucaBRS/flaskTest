@@ -1,0 +1,11 @@
+[flask]
+template_folder = "src/templates"
+static_folder = "src/static"
+instance_path = "src/instance"
+database_uri = "sqlite:///task.db"
+
+[flask_test]
+template_folder_test = "src/templates"
+static_folder_test = "src/static"
+instance_path_test = "src/instance"
+database_uri_test = "sqlite:///task.db"
