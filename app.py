@@ -6,16 +6,13 @@ import logging
 import toml
 from flask import Flask, render_template, url_for, request, redirect
 
-# SQLAlchemy provides a set of tools and utilities for working with databases
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+#l+ SQLAlchemy provides a set of tools and utilities for working with databases from flask_sqlalchemy import SQLAlchemy from datetime import datetime
 from src.main.model.task_model import db, TaskModule  # Import db from the model module
 from src.main.controller.task_controller import TaskController
 
 config = toml.load('config.toml')
 
-# creating a Flask application instance named app
-# __name__ parameter is a special variable that represents the name of the current module
+#l+ creating a Flask application instance named app __name__ parameter is a special variable that represents the name of the current module
 app = Flask(__name__)
 app.template_folder = config['flask']["template_folder"]
 app.static_folder = config['flask']["static_folder"]
