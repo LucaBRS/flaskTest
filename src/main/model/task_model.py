@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+# This creates an instance of the SQLAlchemy class and binds it to your Flask application (app)
 db = SQLAlchemy()
 
 class TaskModule(db.Model):
