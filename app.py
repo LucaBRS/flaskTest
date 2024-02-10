@@ -10,6 +10,7 @@ from flask import Flask, render_template, url_for, request, redirect
 # SQLAlchemy provides a set of tools and utilities for working with databases
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from src.main.model.task_model import db, TaskModule  # Import db from the model module
 
 config = toml.load('config.toml')
 
@@ -25,21 +26,9 @@ app.instance_path=config['flask']["instance_path"]
 # 'sqlite:///task.db': This is the database URI that specifies the connection details for the SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = config['flask']["database_uri"]
 # This creates an instance of the SQLAlchemy class and binds it to your Flask application (app)
-db = SQLAlchemy(app)
-
+db.init_app(app)
 logging.basicConfig(level=logging.DEBUG)
 logger = app.logger
-
-# db.Model indicates that T odo is a database model class, and it inherits from SQLAlchemy's Model base class
-class TaskModule(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    #this is going to be set automatically!
-    date_created = db.Column(db.DateTime, default=datetime.utcnow())
-
-# This method defines how instances of the T odo class are represented as strings when printed or converted to a string
-    def __repr__(self):
-        return "<Task %r>" % self.id
 
 @app.route('/', methods=['GET'])
 def get_tasks():
