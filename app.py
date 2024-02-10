@@ -31,7 +31,7 @@ logging.basicConfig(level=logging.DEBUG)
 logger = app.logger
 
 # db.Model indicates that T odo is a database model class, and it inherits from SQLAlchemy's Model base class
-class Todo(db.Model):
+class TaskModule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
     #this is going to be set automatically!
@@ -43,14 +43,14 @@ class Todo(db.Model):
 
 @app.route('/', methods=['GET'])
 def get_tasks():
-    tasks = Todo.query.order_by(Todo.date_created).all()
+    tasks = TaskModule.query.order_by(TaskModule.date_created).all()
     return render_template('index.html', tasks=tasks)
 
 @app.route('/', methods=['POST'])
 def add_task():
     task_content = request.form['task_content']
     logger.debug("Inserting task: %r" % task_content)
-    new_task = Todo(content=task_content)
+    new_task = TaskModule(content=task_content)
     try:
         db.session.add(new_task)
         db.session.commit()
@@ -60,7 +60,7 @@ def add_task():
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    task_to_delete = TaskModule.query.get_or_404(id)
     try:
         logger.debug('trying to delete task: ' + str(task_to_delete))
         db.session.delete(task_to_delete)
@@ -71,7 +71,7 @@ def delete(id):
 
 @app.route('/update/<int:id>', methods=['GET','POST'])
 def update(id):
-    task_to_update = Todo.query.get_or_404(id)
+    task_to_update = TaskModule.query.get_or_404(id)
     if request.method == 'POST':
         task_to_update.content = request.form['task_content_update']
 

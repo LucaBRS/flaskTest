@@ -1,7 +1,7 @@
 [flask]
-template_folder = "src/templates"
-static_folder = "src/static"
-instance_path = "src/instance"
+template_folder = "src/main/templates"
+static_folder = "src/main/static"
+instance_path = "src/main/instance"
 database_uri = "sqlite:///task.db"
 
 [flask_test]
