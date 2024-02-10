@@ -24,3 +24,14 @@ class TaskDAO:
         task_to_delete = TaskModule.query.get_or_404(id)
         db.session.delete(task_to_delete)
         db.session.commit()
+
+    @classmethod
+    def get_task_by_id(cls, id):
+        return TaskModule.query.get_or_404(id)
+
+    @classmethod
+    def update_task_by_id(cls, id,content):
+        task_to_update = TaskModule.query.get_or_404(id)
+        task_to_update.content = content
+        db.session.commit()
+        pass

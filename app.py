@@ -1,4 +1,3 @@
-# todo FILE "TOML" PER STRUTTURA PROGETTO!
 # todo pytest ()
 # todo transazioni di sqlalchemy
 # todo vedere come aggiungiere openAPI
@@ -38,31 +37,18 @@ def add_task_index():
 
 
 @app.route('/delete/<int:id>')
-def delete(id):
+def delete_index(id):
     return TaskController.delete_task(id)
-    task_to_delete = TaskModule.query.get_or_404(id)
-    try:
-        logger.debug('trying to delete task: ' + str(task_to_delete))
-        db.session.delete(task_to_delete)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return "there was problem deleting task"
 
-@app.route('/update/<int:id>', methods=['GET','POST'])
+@app.route('/update/<int:id>',methods=['GET'])
+def get_update_task_index(id):
+    return TaskController.get_update_task(id)
+
+@app.route('/update/<int:id>', methods=['POST'])
 def update(id):
-    task_to_update = TaskModule.query.get_or_404(id)
-    if request.method == 'POST':
-        task_to_update.content = request.form['task_content_update']
+    return TaskController.post_update_task(id)
 
-        try:
-            #we just have to commit because we already sert the content before
-            db.session.commit()
-            return redirect('/')
-        except:
-            return "there was an issue in updating task"
-    else:
-        return render_template('update.html',task_to_update=task_to_update)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

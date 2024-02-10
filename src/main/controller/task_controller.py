@@ -30,3 +30,17 @@ class TaskController:
             return redirect('/')
         except:
             return "there was problem deleting task"
+
+    @classmethod
+    def get_update_task(cls, id):
+        task = TaskService.get_task_by_id(id)
+        return render_template('update.html',task_to_update=task)
+
+    @classmethod
+    def post_update_task(cls, id):
+        try:
+            content = request.form['task_content_update']
+            task = TaskService.update_task_by_id(id,content)
+            return redirect('/')
+        except:
+            return "there was problem updating task"

@@ -18,3 +18,11 @@ class TaskService:
     def delete_task(cls, id):
         logger.info(f"Deleting task {id}")
         return TaskDAO.delete_task(id)
+
+    @classmethod
+    def get_task_by_id(cls,id):
+        return TaskDAO.get_task_by_id(id)
+
+    @classmethod
+    def update_task_by_id(cls, id,content):
+        return TaskDAO.update_task_by_id(id,content)
