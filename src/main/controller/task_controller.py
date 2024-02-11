@@ -5,11 +5,12 @@ from src.main.service.task_service import TaskService
 
 logger = logging.getLogger(__name__)
 
+
 class TaskController:
     @staticmethod
-    def get_tasks():
+    def get_tasks(gas_prices):
         tasks = TaskService.get_all_tasks()
-        return render_template('index.html', tasks=tasks)
+        return render_template('index.html', tasks=tasks, gas_prices=gas_prices)
 
     @classmethod
     def post_task(cls):
@@ -24,7 +25,7 @@ class TaskController:
             return "There was an issue in adding the task"
 
     @classmethod
-    def delete_task(cls, id):
+    def delete_task(cls, id: int):
         try:
             task = TaskService.delete_task(id)
             return redirect('/')
@@ -32,15 +33,15 @@ class TaskController:
             return "there was problem deleting task"
 
     @classmethod
-    def get_update_task(cls, id):
+    def get_update_task(cls, id: int):
         task = TaskService.get_task_by_id(id)
-        return render_template('update.html',task_to_update=task)
+        return render_template('update.html', task_to_update=task)
 
     @classmethod
-    def post_update_task(cls, id):
+    def post_update_task(cls, id: int):
         try:
             content = request.form['task_content_update']
-            task = TaskService.update_task_by_id(id,content)
+            task = TaskService.update_task_by_id(id, content)
             return redirect('/')
         except:
             return "there was problem updating task"

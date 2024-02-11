@@ -1,7 +1,9 @@
 import logging
 
 from src.main.dao.task_dao import TaskDAO
+
 logger = logging.getLogger(__name__)
+
 
 class TaskService:
     @staticmethod
@@ -10,19 +12,21 @@ class TaskService:
         return TaskDAO.get_all_tasks()
 
     @staticmethod
-    def post_task( task_content):
+    def post_task(task_content: str):
+        task_content = "$ " + task_content + " $"
         logger.info(f"Task content: {task_content}")
         return TaskDAO.post_task(task_content)
 
     @classmethod
-    def delete_task(cls, id):
+    def delete_task(cls, id: int):
         logger.info(f"Deleting task {id}")
         return TaskDAO.delete_task(id)
 
     @classmethod
-    def get_task_by_id(cls,id):
+    def get_task_by_id(cls, id: int):
         return TaskDAO.get_task_by_id(id)
 
     @classmethod
-    def update_task_by_id(cls, id,content):
-        return TaskDAO.update_task_by_id(id,content)
+    def update_task_by_id(cls, id: int, content: str):
+        content = "$ " + content + " $"
+        return TaskDAO.update_task_by_id(id, content)

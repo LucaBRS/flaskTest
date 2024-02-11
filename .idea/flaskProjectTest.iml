@@ -12,6 +12,9 @@
     <orderEntry type="jdk" jdkName="venv_py_ana" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="835baabf-6e46-433b-8612-4c359f835421" />
+  </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
   </component>

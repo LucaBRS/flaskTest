@@ -8,6 +8,8 @@
 - if u change the name of the database mode...well...you should track this changes int the database!! so... or delete 
     and recreate or renaming....(follow step before..)
 - so to separate the db is best to initialize the 
+
+
 # Problems or Todos
 - structure the project in "modules": model, dao, service (or business logic), controller (or route), utils, config
 
