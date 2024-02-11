@@ -2,7 +2,6 @@ import json
 import logging
 
 from flask import redirect
-
 from main.dao.gas_prices_dao import GasPriceDao
 
 logger = logging.getLogger(__name__)

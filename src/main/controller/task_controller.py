@@ -1,7 +1,7 @@
 import logging
 
 from flask import render_template, request, redirect
-from src.main.service.task_service import TaskService
+from main.service.task_service import TaskService
 
 logger = logging.getLogger(__name__)
 

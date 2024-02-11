@@ -7,12 +7,12 @@ import logging
 import toml
 from flask import Flask
 
-from src.main.controller.gas_prices_controller import GasPricesController
-from src.main.controller.task_controller import TaskController
+from main.controller.gas_prices_controller import GasPricesController
+from main.controller.task_controller import TaskController
 # l+ SQLAlchemy provides a set of tools and utilities for working with databases from flask_sqlalchemy import  SQLAlchemy from datetime import datetime
-from src.main.model.sqlite_tables_models import db  # Import db from the model module
+from main.model.sqlite_tables_models import db  # Import db from the model module
 
-config = toml.load('config.toml')
+config = toml.load('src/main/config/config.toml')
 
 # l+ creating a Flask application instance named app __name__ parameter is a special variable that represents the name of the current module
 app = Flask(__name__)

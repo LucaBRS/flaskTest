@@ -1,7 +1,7 @@
 # src/main/dao/task_dao.py
 import logging
 
-from src.main.model.sqlite_tables_models import TaskModule, db, Person
+from main.model.sqlite_tables_models import TaskModule, db, Person
 
 logger = logging.getLogger(__name__)
 

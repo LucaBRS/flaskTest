@@ -1,6 +1,6 @@
 import logging
 
-from src.main.dao.task_dao import TaskDAO
+from main.dao.task_dao import TaskDAO
 
 logger = logging.getLogger(__name__)
 

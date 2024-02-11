@@ -1,5 +1,4 @@
-from main.model.sqlite_tables_models import GasStation
-from src.main.model.sqlite_tables_models import GasStation, db
+from main.model.sqlite_tables_models import GasStation, db
 
 
 class GasPriceDao:
