@@ -62,4 +62,4 @@ class GasStation(Base):
 engine = create_engine(config['flask']['sql_lite_database_uri'])
 Base.metadata.create_all(bind=engine)
 
-Session = sessionmaker(bind=engine)
+Session_sqlite = sessionmaker(bind=engine)
