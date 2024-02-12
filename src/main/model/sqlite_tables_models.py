@@ -1,47 +1,65 @@
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
+from typing import List
+from typing import Optional
 
-# This creates an instance of the SQLAlchemy class and binds it to your Flask application (app)
-db = SQLAlchemy()
+import toml
+from sqlalchemy import ForeignKey, Column, Integer, DateTime, Float, create_engine
+from sqlalchemy import String
+from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
+
+config = toml.load('src/main/config/config.toml')
 
 
-class TaskModule(db.Model):
-    __bind_key__ = "sqlite_task"
+Base = declarative_base()
+
+
+class TaskModule(Base):
     __tablename__ = 'task'
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    # this is going to be set automatically!
-    date_created = db.Column(db.DateTime, default=datetime.utcnow())
+    id: Mapped[int] = mapped_column(primary_key=True)
+    content: Mapped[str] = mapped_column(String(200))
+    date_created: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    # This method defines how instances of the T odo class are represented as strings when printed or converted to a string
+    def __init__(self,  content: str):
+        self.content =str(content)
+
     def __repr__(self):
         return "<Task %r>" % self.id
 
 
-class Person(db.Model):
-    __bind_key__ = "sqlite_person"
+class Person(Base):
     __tablename__ = 'person'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
-    surname = db.Column(db.String(30), nullable=False)
-    content = db.Column(db.String(200), nullable=False)
-    # this is going to be set automatically!
-    date_created = db.Column(db.DateTime, default=datetime.utcnow())
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    surname: Mapped[str] = mapped_column(String(30), nullable=False)
+
+    # Define the many-to-many relationship with TaskModule
+    task_id: Mapped['int'] = mapped_column(Integer)
+
+    date_created: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Task %r>" % self.id
+        return "<Person id=%r, name='%s', surname='%s'>" % (self.id, self.name, self.surname)
 
 
-class GasStation(db.Model):
-    __bind_key__ = "sqlite_gas_station"
+class GasStation(Base):
     __tablename__ = 'gas_station'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
-    gas_price = db.Column(db.Float, nullable=False)
-    diesel_price = db.Column(db.Float, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow())
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    latitude: Mapped[float] = mapped_column(Float, nullable=False)
+    longitude: Mapped[float] = mapped_column(Float, nullable=False)
+    gas_price: Mapped[float] = mapped_column(Float, nullable=False)
+    diesel_price: Mapped[float] = mapped_column(Float, nullable=False)
+    date_created: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Task %r>" % self.id
+        return f"<GasStation {self.id}>"
+
+
+engine = create_engine(config['flask']['sql_lite_database_uri'])
+Base.metadata.create_all(bind=engine)
+
+Session = sessionmaker(bind=engine)

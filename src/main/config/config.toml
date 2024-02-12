@@ -2,7 +2,7 @@
 template_folder = "templates"
 static_folder = "static"
 instance_path = "src/main/instance"
-sql_lite_database_uri = "sqlite:///SQLite.db"
+sql_lite_database_uri = "sqlite:///src/main/instance/SQLite.db"
 
 [flask_test]
 template_folder_test = "src/templates"
