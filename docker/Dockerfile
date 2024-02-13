@@ -3,6 +3,7 @@ FROM python:3.9
 # working directory
 WORKDIR /app
 
+# EXTREMLY IMPORTANT REMOVE "volume" KEY FROM DOCKER-COMPOSE.YML otherwise the copy here will not be final, the volume will overwrite!!
 # Copy  requirements
 COPY requirements.txt /app
 
