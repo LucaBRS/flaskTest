@@ -60,4 +60,5 @@ def get_json():
     return jsonify(json_data)
 
 if __name__ == '__main__':
+    # the same port of the docker for python!
     app.run(host='0.0.0.0', port=8000, debug=True)
