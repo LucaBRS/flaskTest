@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: t_user
+      POSTGRES_PASSWORD: t_000
+      POSTGRES_DB: t_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/main/mock/mock_init.sql:/docker-entrypoint-initdb.d/mock_init.sql
+      - pgdata:/var/lib/postgresql/data
+
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - IMAGE_NAME=flask_test_api
+    depends_on:
+      - postgres
+    environment:
+      DB_URI: postgresql://t_user:t_000@postgres/t_db  # IF U PUT postgres id does not work!!!
+    ports:
+      - "8000:8000"
+    #THIS WILL The ./app directory from your host machine will be mounted into the /app directory of the python-app container. SO IF U USE A COPY IN THE DOCKERFILE THE WILL BE DELETED!!
+#    volumes:
+#      - ./app:/app
+
+volumes:
+  pgdata:
+  flask_test_api:

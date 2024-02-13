@@ -1,6 +1,9 @@
 # todo pytest ()
-# todo transazioni di sqlalchemy
-# todo vedere come aggiungiere openAPI
+# todo transazioni di sqlalchemy e COME GESTIRLE se sono aouto commit (pernsare di creare un decorator transactional e wrapper con rallback) apertura a lviello service
+# todo vedere come aggiungiere openAPI (censire endpoint) e file yml dove esporre serv. REST  # todo SISTEMARE END-POINT IN MODO DA IMPORTARLI DA ESTERNO
+# TODO separare le classi (tavole) trovare soluzione per eriditare da Base IMPORTANTE
+# TODO alembic (migrazioni) (importante vedere per i roll back e capire le versioni...)
+# todo docker per la chiamate al gov
 
 import logging
 

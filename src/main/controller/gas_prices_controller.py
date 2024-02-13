@@ -13,9 +13,8 @@ class GasPricesController:
 
     @classmethod
     def post_gas_prices(cls):
-        url = "https://carburanti.mise.gov.it/ospzApi/search/area"
-        payload = {"region": 1, "province": None, "town": None}
-        response = requests.post(url, json=payload)
+        url = "http://localhost:8000/get_json"
+        response = requests.get(url)
         if response.status_code == 200:
             GasPriceService.post_gas_prices(response.content)
             return redirect('/')

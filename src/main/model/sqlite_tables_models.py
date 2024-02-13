@@ -59,6 +59,7 @@ class GasStation(Base):
         return f"<GasStation {self.id}>"
 
 
+
 engine = create_engine(config['flask']['sql_lite_database_uri'])
 Base.metadata.create_all(bind=engine)
 
