@@ -1,3 +1,5 @@
+# LUCA BARSOTTINI
+
 ## Solutions to problems:
 - Run `pip list --format=freeze > requirements.txt` to avoid the weird output of "pip freeze".
 - When installing the database:
