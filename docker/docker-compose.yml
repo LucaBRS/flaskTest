@@ -25,6 +25,7 @@ services:
     environment:
       DB_URI: postgresql://t_user:t_000@postgres/t_db  # IF U PUT postgres id does not work!!!
     ports:
+      # in order to make it work anso the app.py should point to the same port!
       - "8000:8000"
     #THIS WILL The ./app directory from your host machine will be mounted into the /app directory of the python-app container. SO IF U USE A COPY IN THE DOCKERFILE THE WILL BE DELETED!!
 #    volumes:
