@@ -1,14 +1,36 @@
 from flask import Flask, jsonify
 import os
 import json
+import time
 
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.exc import OperationalError
 
 app = Flask(__name__)
 
 DB_URI = os.getenv('DB_URI')
-engine = create_engine(DB_URI)
+
+
+
+
+DB_CONNECTION_RETRIES = 5
+DB_CONNECTION_DELAY = 5  # seconds
+
+def create_database_connection():
+    engine = None
+    for _ in range(DB_CONNECTION_RETRIES):
+        try:
+            engine = create_engine(DB_URI)
+            engine.connect()
+            break
+        except OperationalError as e:
+            print(f"Error connecting to the database: {e}")
+            print("Retrying in {} seconds...".format(DB_CONNECTION_DELAY))
+            time.sleep(DB_CONNECTION_DELAY)
+    return engine
+
+engine = create_database_connection()
 Base = declarative_base()
 
 # Define the model for the gas_prices table

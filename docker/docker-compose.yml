@@ -2,6 +2,9 @@ version: '3'
 
 services:
   postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
     image: postgres:latest
     restart: always
     environment:
@@ -10,16 +13,16 @@ services:
       POSTGRES_DB: t_db
     ports:
       - "5432:5432"
-    volumes:
-      - ./src/main/mock/mock_init.sql:/docker-entrypoint-initdb.d/mock_init.sql
-      - pgdata:/var/lib/postgresql/data
+  #    volumes:
+  #      - ./src/main/mock/mock_init.sql:/docker-entrypoint-initdb.d/mock_init.sql
+  #      - pgdata:/var/lib/postgresql/data
 
-  python-app:
+  mock_python-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.python
       args:
-        - IMAGE_NAME=flask_test_api
+        - IMAGE_NAME=mock_flask_test_api
     depends_on:
       - postgres
     environment:
@@ -31,6 +34,6 @@ services:
 #    volumes:
 #      - ./app:/app
 
-volumes:
-  pgdata:
-  flask_test_api:
+#volumes:
+#  pgdata:
+#  mock_flask_test_api:

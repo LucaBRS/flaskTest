@@ -1,0 +1,10 @@
+FROM python:3.9 AS python_build
+
+WORKDIR /app
+
+COPY requirements.txt mock_app.py gas.json /app/
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "mock_app.py"]

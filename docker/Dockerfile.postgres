@@ -1,0 +1,4 @@
+FROM postgres:16 AS postgres_build
+
+COPY mock_init.sql /docker-entrypoint-initdb.d/
+

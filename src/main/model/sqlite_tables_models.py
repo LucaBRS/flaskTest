@@ -1,17 +1,16 @@
+import logging
 from datetime import datetime
-from typing import List
-from typing import Optional
 
 import toml
-from sqlalchemy import ForeignKey, Column, Integer, DateTime, Float, create_engine
-from sqlalchemy import String
+from sqlalchemy import ForeignKey, Column, Integer, DateTime, Float, create_engine, String
+from sqlalchemy.orm import Mapped, mapped_column
+
 from sqlalchemy.orm import declarative_base, sessionmaker
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
-config = toml.load('src/main/config/config.toml')
+config = toml.load('../main/config/config.toml')
 
+logger = logging.getLogger(__name__)
 
 Base = declarative_base()
 
@@ -22,8 +21,8 @@ class TaskModule(Base):
     content: Mapped[str] = mapped_column(String(200))
     date_created: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    def __init__(self,  content: str):
-        self.content =str(content)
+    def __init__(self, content: str):
+        self.content = str(content)
 
     def __repr__(self):
         return "<Task %r>" % self.id
@@ -59,7 +58,7 @@ class GasStation(Base):
         return f"<GasStation {self.id}>"
 
 
-
+logger.debug(config['flask']['sql_lite_database_uri'])
 engine = create_engine(config['flask']['sql_lite_database_uri'])
 Base.metadata.create_all(bind=engine)
 

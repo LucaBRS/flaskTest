@@ -9,28 +9,21 @@ import logging
 
 import toml
 from flask import Flask
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+
 
 from main.controller.gas_prices_controller import GasPricesController
 from main.controller.task_controller import TaskController
-from main.model.sqlite_tables_models import Base
-
-# l+ SQLAlchemy provides a set of tools and utilities for working with databases from flask_sqlalchemy import  SQLAlchemy from datetime import datetime
 
 
-
-config = toml.load('src/main/config/config.toml')
+config = toml.load('config/config.toml')
 
 # l+ creating a Flask application instance named app __name__ parameter is a special variable that represents the name of the current module
 app = Flask(__name__)
 app.template_folder = config['flask']["template_folder"]
 app.static_folder = config['flask']["static_folder"]
 app.instance_path = config['flask']["instance_path"]
-# l+ configuring Flask application to use a SQLite database named task.db app.config: This is a dictionary-like object provided by Flask to store configuration settings for your application ['SQLALCHEMY_DATABASE_URI']: This accesses a specific configuration option within the app.config dictionary 'sqlite:///task.db': This is the database URI that specifies the connection details for the SQLite database
 
 
-# l+  explicitly associate the db instance with your Flask application by calling db.init_app(app). This allows Flask-SQLAlchemy to work within the context of your Flask application.
 logging.basicConfig(level=logging.DEBUG)
 logger = app.logger
 
