@@ -10,3 +10,28 @@
 
 ## Problems or Todos
 - Structure the project into "modules": model, DAO, service (or business logic), controller (or route), utils, config.
+
+
+`main/
+|-- config/
+|   |-- config.toml
+|-- dao/
+|   |-- __init__.py
+|   |-- task_dao.py
+|   |-- person_dao.py
+|   |-- gas_station_dao.py
+|-- model/
+|   |-- __init__.py
+|   |-- task_module.py
+|   |-- person.py
+|   |-- gas_station.py
+|-- service/
+|   |-- __init__.py
+|   |-- task_service.py
+|   |-- person_service.py
+|   |-- gas_station_service.py
+|-- controller/
+|   |-- __init__.py
+|   |-- gas_prices_controller.py
+|   |-- task_controller.py
+|-- app.py`

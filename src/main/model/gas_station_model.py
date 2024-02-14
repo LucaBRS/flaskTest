@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from sqlite_tables_models import Base
-from sqlalchemy import ForeignKey, Column, Integer, DateTime, Float, create_engine, String
+from sqlalchemy import DateTime, Float, String
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import declarative_base
 
+Base = declarative_base()
 
-class GasStation1(Base):
-    __tablename__ = 'gas_station1'
+class GasStation(Base):
+    __tablename__ = 'gas_station'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(30), nullable=False)

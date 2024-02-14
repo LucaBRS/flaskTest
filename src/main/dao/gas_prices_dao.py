@@ -1,4 +1,5 @@
-from main.model.sqlite_tables_models import  Session_sqlite,GasStation
+from main.config.sqllite_config import  Session_sqlite
+from main.model.gas_station_model import GasStation
 
 class GasPriceDao:
     @staticmethod

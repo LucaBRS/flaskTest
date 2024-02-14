@@ -1,7 +1,9 @@
 # src/main/dao/task_dao.py
 import logging
 
-from main.model.sqlite_tables_models import TaskModule, Person, Session_sqlite
+from main.model.person_model import Person
+from main.model.task_model import TaskModule
+from main.config.sqllite_config import Session_sqlite
 
 logger = logging.getLogger(__name__)
 

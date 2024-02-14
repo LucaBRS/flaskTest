@@ -54,10 +54,6 @@ def update(id):
     return TaskController.post_update_task(id)
 
 
-# @app.route('/', methods=['GET'])
-# def get_all_gas_prices():
-#     return GasPricesController.get_all_gas_prices()
-
 
 @app.route('/gas_prices', methods=['POST'])
 def post_gas_prices_index():
