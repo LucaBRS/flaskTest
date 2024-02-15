@@ -1,28 +1,22 @@
-from main.config.sqllite_config import Session_sqlite
 from main.model.gas_station_model import GasStation
+from sqlalchemy.orm import Session
 
-Session = Session_sqlite()
 class GasPriceDao:
+    def __init__(self, session):
+        self.session = session
 
-    @classmethod
-    def get_all_gas_prices(cls):
-        session = Session
-        gas_prices = session.query(GasStation).all()
-        session.close()
+    def get_all_gas_prices(self):
+        gas_prices = self.session.query(GasStation).all()
+        self.session.close()
         return gas_prices
 
-    @classmethod
-    def add_gas_price(cls, _id, name, lat, lng, gas, diesel):
-        session = Session
+    def add_gas_price(self, _id, name, lat, lng, gas, diesel):
         new_gas_station = GasStation(name=name, latitude=lat, longitude=lng, gas_price=gas, diesel_price=diesel)
-        session.add(new_gas_station)
-        session.commit()
-        session.close()
+        self.session.add(new_gas_station)
+        self.session.commit()
+        self.session.close()
 
-    @classmethod
-    def delete_all_gas_prices(cls):
-        session = Session
-        session.query(GasStation).delete()
-        session.commit()
-        session.close()
-
+    def delete_all_gas_prices(self):
+        self.session.query(GasStation).delete()
+        self.session.commit()
+        self.session.close()

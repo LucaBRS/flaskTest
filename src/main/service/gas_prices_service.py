@@ -2,19 +2,21 @@ import json
 import logging
 
 from flask import redirect
+from sqlalchemy.orm import Session
+
 from main.dao.gas_prices_dao import GasPriceDao
 
 logger = logging.getLogger(__name__)
 
 
 class GasPriceService:
-    @staticmethod
-    def get_all_gas_prices():
-        return GasPriceDao.get_all_gas_prices()
+    def __init__(self,session:Session):
+        self.gas_price_dao = GasPriceDao(session)
+    def get_all_gas_prices(self):
+        return self.gas_price_dao.get_all_gas_prices()
 
 
-    @classmethod
-    def post_gas_prices(cls, contents):
+    def post_gas_prices(self, contents):
         contents = json.loads(contents)
         gas_prices: list = []
         for content in contents['results']:
@@ -32,7 +34,7 @@ class GasPriceService:
                 elif fuel['fuelId'] == 2 and fuel['isSelf'] == True:
                     diesel = float(fuel['price'])
 
-            GasPriceDao.add_gas_price(_id, name, lat, lng, gas, diesel)
+            self.gas_price_dao.add_gas_price(_id, name, lat, lng, gas, diesel)
 
             gas_prices.append({
                 "id": _id,
@@ -45,7 +47,6 @@ class GasPriceService:
 
         logger.debug(gas_prices)
 
-    @staticmethod
-    def delete_all_gas_prices():
-        GasPriceDao.delete_all_gas_prices()
-        pass
+    def delete_all_gas_prices(self=None):
+        self.gas_price_dao.delete_all_gas_prices()
+

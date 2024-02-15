@@ -5,24 +5,22 @@ from main.service.gas_prices_service import GasPriceService
 
 
 class GasPricesController:
-
-    @staticmethod
-    def get_all_gas_prices():
-        gas_prices = GasPriceService().get_all_gas_prices()
+    def __init__(self,sessions:dict):
+        self.gas_price_service = GasPriceService(sessions['sqlite_session'])
+    def get_all_gas_prices(self):
+        gas_prices = self.gas_price_service.get_all_gas_prices()
         return  gas_prices
 
-    @classmethod
-    def post_gas_prices(cls):
+    def post_gas_prices(self):
         url = "http://localhost:8000/get_json"
         response = requests.get(url)
         if response.status_code == 200:
-            GasPriceService.post_gas_prices(response.content)
+            self.gas_price_service.post_gas_prices(response.content)
             return redirect('/')
         else:
             raise Exception("Error posting GasPrices")
 
-    @staticmethod
-    def delete_all_gas_prices():
-        GasPriceService.delete_all_gas_prices()
+    def delete_all_gas_prices(self):
+        self.gas_price_service.delete_all_gas_prices()
         return redirect('/')
         pass
