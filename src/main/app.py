@@ -6,17 +6,21 @@
 # todo docker per la chiamate al gov
 
 import logging
+import os
+import sys
 
 import toml
 from flask import Flask
 
-from config.sessions_configuration import SessionsConfig
-from main.controller.gas_prices_controller import GasPricesController
-from main.controller.task_controller import TaskController
+from controller.gas_prices_controller import GasPricesController
+from controller.task_controller import TaskController
 
+# sys.argv
+# dfgsdf
 
-config = toml.load('config/config.toml')
-Sessions = SessionsConfig(config).get_all_sessions()
+current_dir = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(current_dir, '..', '..', 'config.toml')
+config = toml.load(config_file_path)
 
 # l+ creating a Flask application instance named app __name__ parameter is a special variable that represents the name of the current module
 app = Flask(__name__)
@@ -24,45 +28,45 @@ app.template_folder = config['flask']["template_folder"]
 app.static_folder = config['flask']["static_folder"]
 app.instance_path = config['flask']["instance_path"]
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = app.logger
-task_controller = TaskController(Sessions)
-gas_prices_controller = GasPricesController(Sessions)
+
+
 @app.route('/', methods=['GET'])
 def get_task_index():
-    gas_prices = gas_prices_controller.get_all_gas_prices()
-    return task_controller.get_tasks(gas_prices)
+    gas_prices = GasPricesController().get_all_gas_prices()
+    return TaskController().get_tasks(gas_prices)
 
 
 @app.route('/', methods=['POST'])
 def add_task_index():
-    return task_controller.post_task()
+    return TaskController().post_task()
 
 
 @app.route('/delete/<int:id>')
 def delete_index(id):
-    return task_controller.delete_task(id)
+    return TaskController().delete_task(id)
 
 
 @app.route('/update/<int:id>', methods=['GET'])
 def get_update_task_index(id):
-    return task_controller.get_update_task(id)
+    return TaskController().get_update_task(id)
 
 
 @app.route('/update/<int:id>', methods=['POST'])
 def update(id):
-    return task_controller.post_update_task(id)
-
+    return TaskController().post_update_task(id)
 
 
 @app.route('/gas_prices', methods=['POST'])
 def post_gas_prices_index():
-    return gas_prices_controller.post_gas_prices()
+    return GasPricesController().post_gas_prices()
+
 
 @app.route('/delete_all_gas_prices', methods=['GET'])
 def delete_all_gas_prices():
-    return gas_prices_controller.delete_all_gas_prices()
+    return GasPricesController().delete_all_gas_prices()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

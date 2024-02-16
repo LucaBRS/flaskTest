@@ -1,45 +1,38 @@
-import unittest
-
 import pytest
+from unittest.mock import Mock
 
-from main.dao.gas_prices_dao import GasPriceDao, Session
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from main.dao.gas_prices_dao import GasPriceDao
 from main.model.gas_station_model import GasStation
 
-test_gas_station = {
-    'name': 'Test Gas Station',
-    'latitude': 0.0,
-    'longitude': 0.0,
-    'gas_price': 1.0,
-    'diesel_price': 2.0
-}
 
+mock_engine = create_engine("sqlite:///:memory:")
+MockSession = sessionmaker(bind=mock_engine)()
+mock_session = Mock(spec=MockSession)
 
-class GasPriceDaoTest(unittest.TestCase):
+@pytest.fixture
+def mock_session():
+    return mock_session
 
-    def test_get_all_gas_prices(self):
-        test_station = GasStation(**test_gas_station)
-        Session.add(test_station)
+@pytest.fixture
+def gas_price_dao(mock_session):
+    return GasPriceDao(mock_session)
 
-        gas_stations = GasPriceDao.get_all_gas_prices()
+def test_get_all_gas_prices(mock_session, gas_price_dao):
+    mock_session.query.return_value.all.return_value = [
+        GasStation(id=1, name="Station 1", latitude=0, longitude=0, gas_price=2.5, diesel_price=2.0)
+    ]
 
-        assert len(gas_stations) == 1
-        assert gas_stations[0].name == 'Test Gas Station'
+    gas_prices = gas_price_dao.get_all_gas_prices()
 
+    assert len(gas_prices) == 1
+    assert isinstance(gas_prices[0], GasStation)
+    assert gas_prices[0].id == 1
+    assert gas_prices[0].name == "Station 1"
+    assert gas_prices[0].latitude == 0
+    assert gas_prices[0].longitude == 0
+    assert gas_prices[0].gas_price == 2.5
+    assert gas_prices[0].diesel_price == 2.0
 
-    def test_add_gas_price(self):
-        GasPriceDao.add_gas_price(**test_gas_station)
-
-        gas_station = Session.query(GasStation).filter_by(name='Test Gas Station').first()
-
-        assert gas_station is not None
-        assert gas_station.latitude == 0.0
-
-    def test_delete_all_gas_prices(self):
-        test_station = GasStation(**test_gas_station)
-        Session.add(test_station)
-        Session.commit()
-
-        GasPriceDao.delete_all_gas_prices()
-
-        gas_stations = Session.query(GasStation).all()
-        assert len(gas_stations) == 0

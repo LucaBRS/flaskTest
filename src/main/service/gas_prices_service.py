@@ -10,13 +10,13 @@ logger = logging.getLogger(__name__)
 
 
 class GasPriceService:
-    def __init__(self,session:Session):
-        self.gas_price_dao = GasPriceDao(session)
-    def get_all_gas_prices(self):
-        return self.gas_price_dao.get_all_gas_prices()
 
+    @classmethod
+    def get_all_gas_prices(cls):
+        return GasPriceDao.get_all_gas_prices()
 
-    def post_gas_prices(self, contents):
+    @classmethod
+    def post_gas_prices(cls, contents):
         contents = json.loads(contents)
         gas_prices: list = []
         for content in contents['results']:
@@ -34,7 +34,7 @@ class GasPriceService:
                 elif fuel['fuelId'] == 2 and fuel['isSelf'] == True:
                     diesel = float(fuel['price'])
 
-            self.gas_price_dao.add_gas_price(_id, name, lat, lng, gas, diesel)
+            GasPriceDao.add_gas_price(_id, name, lat, lng, gas, diesel)
 
             gas_prices.append({
                 "id": _id,
@@ -47,6 +47,6 @@ class GasPriceService:
 
         logger.debug(gas_prices)
 
-    def delete_all_gas_prices(self=None):
-        self.gas_price_dao.delete_all_gas_prices()
-
+    @classmethod
+    def delete_all_gas_prices(cls):
+        GasPriceDao.delete_all_gas_prices()
