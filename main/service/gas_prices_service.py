@@ -1,8 +1,6 @@
 import json
 import logging
 
-from flask import redirect
-from sqlalchemy.orm import Session
 
 from main.dao.gas_prices_dao import GasPriceDao
 

@@ -1,0 +1,3 @@
+[flask]
+sql_lite_database_uri = "sqlite:///testing/instance/SQLite_test.db"
+

@@ -1,6 +1,3 @@
 [flask]
-template_folder = "templates"
-static_folder = "static"
-instance_path = "src/main/instance"
-sql_lite_database_uri = "sqlite:///instance/SQLite.db"
+sql_lite_database_uri = "sqlite:///main/instance/SQLite.db"
 

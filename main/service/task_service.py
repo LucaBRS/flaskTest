@@ -1,7 +1,5 @@
 import logging
 
-from sqlalchemy.orm import Session
-
 from main.dao.task_dao import TaskDAO
 
 logger = logging.getLogger(__name__)

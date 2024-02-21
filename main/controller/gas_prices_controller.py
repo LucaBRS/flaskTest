@@ -1,7 +1,7 @@
 import requests
 from flask import redirect, render_template
 
-from src.main.service.gas_prices_service import GasPriceService
+from main.service.gas_prices_service import GasPriceService
 
 
 class GasPricesController:

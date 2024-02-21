@@ -6,17 +6,30 @@
 # todo docker per la chiamate al gov
 
 import logging
+
+# ùù if u do not specify the log file name, it will print on the console!!
+logging.basicConfig(filename='', encoding='utf-8', level=logging.DEBUG,format='%(asctime)s - [%(name)s] %(levelname)s %(message)s')
+# formatter = logging.Formatter('%(asctime)s - [%(name)s] %(levelname)s %(message)s')
+#
+# # Get the root logger
+# root_logger = logging.getLogger()
+#
+# #  StreamHandler for logging to console
+# console_handler = logging.StreamHandler()
+# console_handler.setLevel(logging.DEBUG)  #  log level for console output
+# console_handler.setFormatter(formatter)  #  formatter for console output
+#
+# # console handler to the root logger
+# root_logger.addHandler(console_handler)
+
+
 import os
-import sys
 
 import toml
 from flask import Flask
 
-from controller.gas_prices_controller import GasPricesController
-from controller.task_controller import TaskController
-
-# sys.argv
-# dfgsdf
+from main.controller.gas_prices_controller import GasPricesController
+from main.controller.task_controller import TaskController
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(current_dir, '..', '..', 'config.toml')
@@ -24,12 +37,10 @@ config = toml.load(config_file_path)
 
 # l+ creating a Flask application instance named app __name__ parameter is a special variable that represents the name of the current module
 app = Flask(__name__)
+
 app.template_folder = config['flask']["template_folder"]
 app.static_folder = config['flask']["static_folder"]
 app.instance_path = config['flask']["instance_path"]
-
-logging.basicConfig(level=logging.DEBUG)
-logger = app.logger
 
 
 @app.route('/', methods=['GET'])
