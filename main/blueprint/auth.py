@@ -89,3 +89,27 @@ def sign_up():
             return redirect(url_for('todo_list_bp.get_task_index'))
 
     return render_template('sign_up.html', user=current_user)
+
+
+@auth_bp.route('/update-user', methods=['GET', 'POST'])
+@login_required
+def update_users():
+    if request.method == 'POST':
+        if current_user.role != 'admin':
+            flash('you are not an admin', category='error')
+            return redirect(url_for('auth.update_user'))
+        update_user_id = request.form.get('update_user')
+        update_user: User = session_user.query(User).get(int(update_user_id))
+        if not update_user:
+            flash('User not found.', category='error')
+            return redirect(url_for('auth.update_user'))
+        else:
+            update_user.first_name = request.form.get(f'first_name_{update_user_id}')
+            update_user.password = generate_password_hash(request.form.get(f'password_{update_user_id}'),
+                                                          method='sha256')
+            update_user.role = request.form.get(f'role_{update_user_id}')
+            session_user.commit()
+            flash('User updated!', category='success')
+
+    users = session_user.query(User).all()
+    return render_template('update_user.html', users=users, user=current_user)

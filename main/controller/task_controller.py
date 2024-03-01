@@ -38,7 +38,7 @@ class TaskController:
     @classmethod
     def get_update_task(cls, id: int):
         task = TaskService.get_task_by_id(id)
-        return render_template('update.html', task_to_update=task)
+        return render_template('update.html', task_to_update=task,user=current_user)
 
     @classmethod
     def post_update_task(cls, id: int):

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head %}
+    Update User
+{% endblock %}
+
+{% block body %}
+<body>
+    <h1>Update Users</h1>
+    <form id="update-form" method="POST" action="/update-user">
+        <table>
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for old_user in users %}
+                <tr>
+                    <td>{{ old_user.email }}</td>
+                    <td><input type="text" name="first_name_{{ old_user.id }}" value="{{ old_user.first_name }}"></td>
+                    <td><input type="password" name="password_{{ old_user.id }}"></td>
+                    <td>
+                        <select name="role_{{ old_user.id }}">
+                            <option value="admin" {% if old_user.role == 'admin' %}selected{% endif %}>Admin</option>
+                            <option value="maintainer" {% if old_user.role == 'maintainer' %}selected{% endif %}>Maintainer</option>
+                            <option value="viewer" {% if old_user.role == 'viewer' %}selected{% endif %}>Viewer</option>
+                            <option value="None" {% if old_user.role == None %}selected{% endif %}>To be..</option>
+                        </select>
+                    </td>
+                    <td><button type="submit" name="update_user" value="{{ old_user.id }}">Update</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</body>
+{% endblock %}
