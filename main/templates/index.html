@@ -34,37 +34,37 @@
     </div>
 {% endblock %}
 
-{% block gas_station %}
-    <div>
-        <h1>GAS PRICE</h1>
-        <form action="/gas_prices" method="POST">
-            <input type="submit" value="Get all gas prices">
-        </form>
-        <form action="/delete_all_gas_prices" method="GET">
-            <input type="submit" value="Delete al gas">
-        </form>
-        <table>
-            <tr>
-                <th>name</th>
-                <th>latitude</th>
-                <th>longitude</th>
-                <th>gas</th>
-                <th>diesel</th>
-            </tr>
-
-            {% for gas_price in gas_prices %}
-                <tr>
-                    <td>{{ gas_price.name }}</td>
-                    <td>{{ gas_price.latitude }}</td>
-                    <td>{{ gas_price.longitude }}</td>
-                    <td>{{ gas_price.gas_price }}</td>
-                    <td>{{ gas_price.diesel_price }}</td>
-                    <td>
-                        <a href="/delete/{{ gas_price.id }}">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
-
-        </table>
-    </div>
-{% endblock %}
+{#{% block gas_station %}#}
+{#    <div>#}
+{#        <h1>GAS PRICE</h1>#}
+{#        <form action="/gas_prices" method="POST">#}
+{#            <input type="submit" value="Get all gas prices">#}
+{#        </form>#}
+{#        <form action="/delete_all_gas_prices" method="GET">#}
+{#            <input type="submit" value="Delete al gas">#}
+{#        </form>#}
+{#        <table>#}
+{#            <tr>#}
+{#                <th>name</th>#}
+{#                <th>latitude</th>#}
+{#                <th>longitude</th>#}
+{#                <th>gas</th>#}
+{#                <th>diesel</th>#}
+{#            </tr>#}
+{##}
+{#            {% for gas_price in gas_prices %}#}
+{#                <tr>#}
+{#                    <td>{{ gas_price.name }}</td>#}
+{#                    <td>{{ gas_price.latitude }}</td>#}
+{#                    <td>{{ gas_price.longitude }}</td>#}
+{#                    <td>{{ gas_price.gas_price }}</td>#}
+{#                    <td>{{ gas_price.diesel_price }}</td>#}
+{#                    <td>#}
+{#                        <a href="/delete/{{ gas_price.id }}">Delete</a>#}
+{#                    </td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{##}
+{#        </table>#}
+{#    </div>#}
+{#{% endblock %}#}

@@ -1,0 +1,40 @@
+{#this extend what is in the base.html in particular is the parent for login.html#}
+{# now, if u define a block with a particular name in the base.html, and  u write the same block here, what is in here
+will overwrite the block in te parent (like object)#}
+{% extends "base.html" %}
+{% block title %}Changed{% endblock %}
+
+{% block body %}
+    {#    {% if boolean==True %}#}
+    {#        yes it is true!#}
+    {#    {% else %}#}
+    {#        no it aint true#}
+    {#    {% endif %}#}
+    <form method="POST">
+        <h3 align="center">Log In</h3>
+        <div class="form-group">
+            <label for="email">email address</label>
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   name="email"
+                   placeholder="Enter email"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="password"
+                   name="password"
+                   placeholder="Enter password"
+            />
+
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+
+{% endblock %}

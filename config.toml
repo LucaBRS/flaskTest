@@ -1,3 +1,18 @@
 [flask]
+template_folder = "main/templates"
+static_folder = "main/static"
+instance_path = "main/instance"
 sql_lite_database_uri = "sqlite:///main/instance/SQLite.db"
+sql_lite_database_user = "sqlite:///main/instance/SQLiteUser.db"
 
+
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+pythonpath = ["."]
+
+[flask_test]
+template_folder_test = "src/templates"
+static_folder_test = "src/static"
+instance_path_test = "src/instance"
+sql_lite_database_uri_test = "sqlite:///../testing/task.db"
