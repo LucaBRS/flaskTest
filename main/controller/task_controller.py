@@ -1,6 +1,8 @@
 import logging
 
 from flask import render_template, request, redirect
+from flask_login import current_user
+
 from main.service.task_service import TaskService
 
 logger = logging.getLogger(__name__)
@@ -11,7 +13,7 @@ class TaskController:
     @classmethod
     def get_tasks(cls,gas_prices):
         tasks = TaskService.get_all_tasks()
-        return render_template('index.html', tasks=tasks, gas_prices=gas_prices)
+        return render_template('index.html', tasks=tasks, gas_prices=gas_prices,user=current_user)
 
     @classmethod
     def post_task(cls):
