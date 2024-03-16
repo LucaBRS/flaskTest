@@ -29,7 +29,7 @@ logging.basicConfig(filename='', encoding='utf-8', level=logging.DEBUG,
 import toml
 from flask import Flask
 from main.blueprint.todo_list_routing import todo_list_bp
-from main.blueprint.auth import auth_bp,login_manager
+from main.blueprint.auth import auth_bp, login_manager, authorize
 
 config = toml.load('config.toml')
 
@@ -50,6 +50,7 @@ app.register_blueprint(todo_list_bp, url_prefix="/")
 app.register_blueprint(auth_bp, url_prefix="/")
 
 login_manager.init_app(app)  # ll tell log in manager which app we are using!
+authorize.init_app(app)
 
 if __name__ == '__main__':
     app.run(debug=True)
