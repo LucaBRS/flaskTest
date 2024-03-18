@@ -4,7 +4,8 @@ from sqlalchemy import DateTime, Float, String
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.orm import declarative_base
 
-Base = declarative_base()
+from main.model.base import Base
+
 
 class GasStation(Base):
     __tablename__ = 'gas_station'

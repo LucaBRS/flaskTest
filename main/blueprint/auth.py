@@ -1,11 +1,15 @@
 import logging
 
 from flask import Blueprint, render_template, request, redirect, flash, url_for
+from flask_security import hash_password, Security, SQLAlchemyUserDatastore
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from main.config.sessions_configuration import sqlite_session_user
 from main.model.user_model import User
+from main.model.role_model import Role
 from flask_login import login_user, logout_user, login_required, current_user, LoginManager
+
+
 
 auth_bp = Blueprint('auth', __name__)
 logger = logging.getLogger(__name__)
@@ -14,6 +18,8 @@ session_user = sqlite_session_user
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'  # where u should redirect if the no user is not logged in
+user_datastore = SQLAlchemyUserDatastore(db=session_user,user_model=User,role_model=Role)
+security = Security(datastore=user_datastore)
 
 
 @login_manager.user_loader  # ll this tell flask how we load user and what user we are looking for
@@ -113,3 +119,7 @@ def update_users():
 
     users = session_user.query(User).all()
     return render_template('update_user.html', users=users, user=current_user)
+
+# one time setup
+
+
