@@ -30,7 +30,7 @@ logging.basicConfig(filename='', encoding='utf-8', level=logging.DEBUG,
 
 import toml
 from flask import Flask
-from main.blueprint.todo_list_routing import todo_list_bp
+# from main.blueprint.todo_list_routing import todo_list_bp
 from main.blueprint.auth import auth_bp,login_manager,security,session_user
 
 config = toml.load('config.toml')
@@ -53,7 +53,7 @@ app.config["SECURITY_EMAIL_VALIDATOR_ARGS"] = {"check_deliverability": False}
 
 # ll here search for the primary key automatically!
 
-app.register_blueprint(todo_list_bp, url_prefix="/")
+# app.register_blueprint(todo_list_bp, url_prefix="/")
 app.register_blueprint(auth_bp, url_prefix="/")
 
 login_manager.init_app(app)  # ll tell log in manager which app we are using!
@@ -63,17 +63,17 @@ app.security = security
 
 
 # one time setup
-with app.app_context():
-
-    # Create a user and role to test with
-    app.security.datastore.find_or_create_role(
-        name="user", permissions={"user-read", "user-write"}
-    )
-    session_user.commit()
-    if not app.security.datastore.find_user(email="test@me.com"):
-        app.security.datastore.create_user(email="test@me.com",
-        password=hash_password("password"), roles=["user"])
-    session_user.commit()
+# with app.app_context():
+#
+#     # Create a user and role to test with
+#     app.security.datastore.find_or_create_role(
+#         name="admin", permissions={"user-read", "user-write", "admin_modify"}
+#     )
+#     session_user.commit()
+#     if not app.security.datastore.find_user(email="admin@me.com"):
+#         app.security.datastore.create_user(email="admin@me.com",
+#         password=hash_password("admin"), roles=["admin"])
+#     session_user.commit()
 
 
 if __name__ == '__main__':

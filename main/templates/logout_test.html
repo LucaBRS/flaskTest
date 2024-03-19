@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 0 auto;
+            width: 500px;
+            text-align: center;
+        }
+        .user-info {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Dashboard</h2>
+        <div class="user-info">
+            <p>Hello, {{ current_user.username }}</p>
+            <p>Email: {{ current_user.email }}</p>
+            <!-- Add more user information as needed -->
+        </div>
+        <form action="{{ url_for('logout') }}" method="post">
+            <input class="logout-btn" type="submit" value="Logout">
+        </form>
+    </div>
+</body>
+</html>

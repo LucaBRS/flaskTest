@@ -3,10 +3,10 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.mutable import MutableList
 from sqlalchemy.orm import declarative_base, relationship
 
-from main.model.base_auth import Base
+from main.model.base_auth import Base_Auth
 
 
-class Role(Base, RoleMixin):
+class Role(Base_Auth, RoleMixin):
     __tablename__ = 'role'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False, unique=True)

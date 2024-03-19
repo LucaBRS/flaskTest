@@ -5,10 +5,10 @@ from flask_login import UserMixin
 from sqlalchemy import String, Column, Integer, DateTime, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship, declarative_base, backref
 from main.model.userRole_model import UserRole
-from main.model.base_auth import Base
+from main.model.base_auth import Base_Auth
 
 
-class User(UserMixin, Base):
+class User(UserMixin, Base_Auth):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     email = Column(String(120), unique=True, nullable=False)

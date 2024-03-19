@@ -1,13 +1,13 @@
 from sqlalchemy import Column, Integer, ForeignKey, Table
 
-from main.model.base_auth import Base
+from main.model.base_auth import Base_Auth
 
 
 # UserRole = Table('user_role', Base.metadata, Column('user_id', ForeignKey('user.id'), primary_key=True),
 #                  Column('role_id', ForeignKey('role.id'), primary_key=True)
 #                  )
 
-class UserRole(Base):
+class UserRole(Base_Auth):
     __tablename__ = 'user_role'
 
     id = Column(Integer(), primary_key=True)
